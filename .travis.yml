@@ -1,0 +1,8 @@
+language: java
+jdk: oraclejdk14
+
+script:
+  - ./gradlew lintKotlin
+  - ./gradlew test
+  - ./gradlew build
+  - ./gradlew run
