@@ -4,6 +4,7 @@ notifications:
   email: false
 
 script:
+  - ./gradlew generateGrammarSource
   - ./gradlew lintKotlin
   - ./gradlew test
   - ./gradlew build
