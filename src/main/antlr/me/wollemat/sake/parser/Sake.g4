@@ -1,7 +1,7 @@
 grammar Sake;
 
 @header {
-package me.wollemat.parser;
+package me.wollemat.sake.parser;
 }
 
 // Parser rules

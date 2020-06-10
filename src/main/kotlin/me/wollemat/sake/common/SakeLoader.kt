@@ -1,7 +1,7 @@
-package me.wollemat.common
+package me.wollemat.sake.common
 
-import me.wollemat.parser.SakeLexer
-import me.wollemat.parser.SakeParser
+import me.wollemat.sake.parser.SakeLexer
+import me.wollemat.sake.parser.SakeParser
 import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream
 
