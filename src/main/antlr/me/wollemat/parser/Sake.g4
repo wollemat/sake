@@ -1,4 +1,4 @@
-grammar Hello;
+grammar Sake;
 
 @header {
 package me.wollemat.parser;
