@@ -6,6 +6,6 @@ import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream
 
 fun main() {
-    val parser = HelloParser(CommonTokenStream(HelloLexer(ANTLRInputStream("hello hans"))))
-    println(parser.start().ID())
+    val parser = HelloParser(CommonTokenStream(HelloLexer(ANTLRInputStream("fun main() -> print('Hello, World!')"))))
+    println(parser.start().function(0).identifier().ID())
 }
