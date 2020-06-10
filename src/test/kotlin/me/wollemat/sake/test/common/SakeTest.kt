@@ -1,4 +1,4 @@
-package me.wollemat
+package me.wollemat.sake.test.common
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
