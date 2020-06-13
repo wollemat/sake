@@ -34,3 +34,8 @@ test {
 }
 
 compileKotlin.dependsOn generateGrammarSource
+
+generateGrammarSource {
+    arguments += ['-package', 'me.wollemat.sake.parser']
+    outputDirectory = new File(buildDir.toString() + "/generated-src/antlr/main/me/wollemat/sake/parser/")
+}
