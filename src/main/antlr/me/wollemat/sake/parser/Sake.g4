@@ -9,57 +9,54 @@ package me.wollemat.sake.parser;
 start       :   function+ EOF
             ;
 
-function    :   FUN identifier OPEN CLOSE ARROW expression
-            |   FUN identifier OPEN params CLOSE ARROW expression
+function    :   FUN ID OPEN CLOSE ARROW expression                      # NoParameterFunction
+            |   FUN ID OPEN ID CLOSE ARROW expression                   # ParameterFunction
+            |   FUN ID OPEN (ID COMMA)* ID  CLOSE ARROW expression      # MultipleParameterFunction
             ;
 
-
-
-expression  :   IF OPEN condition CLOSE expression ELSE expression
-            |   expression PLUS expression
-            |   expression SUB expression
-            |   expression MULT expression
-            |   expression DIV expression
-            |   expression REM expression
-            |   SUB expression
-            |   expression APPEND expression
-            |   PRINT OPEN STRING CLOSE
-            |   HEAD OPEN expression CLOSE
-            |   TAIL OPEN expression CLOSE
-            |   FAIL OPEN CLOSE
-            |   STRING
-            |   NUMBER
-            |   TRUE
-            |   FALSE
-            |   NIL
-            |   identifier
-            |   identifier OPEN CLOSE
-            |   identifier OPEN arguments CLOSE
+expression  :   IF OPEN expression CLOSE expression ELSE expression     # IfExpression
+            |   expression PLUS expression                              # AdditionExpression
+            |   expression SUB expression                               # SubtractionExpression
+            |   expression MULT expression                              # MultiplicationExpression
+            |   expression DIV expression                               # DivisionExpression
+            |   expression REM expression                               # RemainderExpression
+            |   SUB expression                                          # NegationExpression
+            |   expression AND expression                               # AndExpression
+            |   expression OR expression                                # OrExpression
+            |   NOT expression                                          # NotExpression
+            |   expression GE expression                                # GreaterEqualsExpression
+            |   expression GT expression                                # GreaterThanExpression
+            |   expression LE expression                                # LessEqualsExpression
+            |   expression LT expression                                # LessThanExpression
+            |   expression EQ expression                                # EqualsExpression
+            |   expression NEQ expression                               # NotEqualsExpression
+            |   expression APPEND expression                            # AppendExpression
+            |   application                                             # ApplicationExpression
+            |   ID                                                      # VariableExpression
+            |   primitive                                               # PrimitiveExpression
+            |   constant                                                # ConstantExpression
             ;
 
-condition   :   expression AND expression
-            |   expression OR expression
-            |   NOT expression
-            |   expression GE expression
-            |   expression GT expression
-            |   expression LE expression
-            |   expression LT expression
-            |   expression EQ expression
-            |   expression NEQ expression
-            |   TRUE
-            |   FALSE
+application :   PRINT OPEN expression CLOSE                             # PrintApplication
+            |   HEAD OPEN expression CLOSE                              # HeadApplication
+            |   TAIL OPEN expression CLOSE                              # TailApplication
+            |   FAIL OPEN CLOSE                                         # FailApplication
+            |   ID OPEN CLOSE                                           # NoArgumentApplication
+            |   ID OPEN expression CLOSE                                # ArgumentApplciation
+            |   ID OPEN (expression COMMA)* expression CLOSE            # MultipleArgumentsApplication
             ;
 
-params      :   (identifier COMMA)* identifier
+primitive   :   STRING                                                  # StringPrimitive
+            |   FLOAT                                                   # FloatPrimitive
+            |   INTEGER                                                 # IntegerPrimitive
             ;
 
-arguments   :   (expression COMMA)* expression
+constant    :   TRUE                                                    # TrueConstant
+            |   FALSE                                                   # FalseConstant
+            |   NIL                                                     # NilConstant
             ;
 
-identifier  :   ID
-            ;
-
-// Lexer fragments
+// Lexer fragments (NOT RULES!)
 
 fragment DIGIT      :   [0-9];
 fragment LOWERCASE  :   [a-z];
@@ -88,9 +85,14 @@ FAIL        :   'fail';
 
 //  Special characters
 
+QUOTE       :   '\'';
+DOT         :   '.';
 COMMA       :   ',';
 OPEN        :   '(';
 CLOSE       :   ')';
+
+//  Reserved operators
+
 APPEND      :   '::';
 
 PLUS        :   '+';
@@ -106,11 +108,17 @@ LT          :   '<';
 EQ          :   '==';
 NEQ         :   '!=';
 
-//  Lexer rules
+//  Primitive rules
 
-STRING      :   '\'' (~'\''|'\'')* '\'';
+STRING      :   QUOTE (~'\''|'\\\'')* QUOTE;
+FLOAT       :   DIGIT+ DOT DIGIT+;
+INTEGER     :   DIGIT+;
+
+// Identifier rule
+
 ID          :   LOWERCASE+;
-NUMBER      :   DIGIT+;
+
+// Ignored characters
 
 WHITESPACE  :   (' '|'\t')+ -> skip;
 NEWLINE     :   ('\r'?'\n'|'\r')+ -> skip;
