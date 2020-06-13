@@ -54,6 +54,7 @@ primitive   :   STRING                                                  # String
 constant    :   TRUE                                                    # TrueConstant
             |   FALSE                                                   # FalseConstant
             |   NIL                                                     # NilConstant
+            |   NULL                                                    # NullConstant
             ;
 
 // Lexer fragments (NOT RULES!)
@@ -73,6 +74,7 @@ ELSE        :   'else';
 TRUE        :   'true';
 FALSE       :   'false';
 NIL         :   'nil';
+NULL        :   'null';
 
 AND         :   'and';
 OR          :   'or';

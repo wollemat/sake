@@ -17,7 +17,7 @@ data class SubNode(val expr1: ExpressionNode, val expr2: ExpressionNode) : Expre
 data class MultNode(val expr1: ExpressionNode, val expr2: ExpressionNode) : ExpressionNode()
 data class DivNode(val expr1: ExpressionNode, val expr2: ExpressionNode) : ExpressionNode()
 data class RemNode(val expr1: ExpressionNode, val expr2: ExpressionNode) : ExpressionNode()
-data class NegNode(val expr1: ExpressionNode) : ExpressionNode()
+data class NegNode(val expr: ExpressionNode) : ExpressionNode()
 data class AndNode(val expr1: ExpressionNode, val expr2: ExpressionNode) : ExpressionNode()
 data class OrNode(val expr1: ExpressionNode, val expr2: ExpressionNode) : ExpressionNode()
 data class NotNode(val expr: ExpressionNode) : ExpressionNode()
@@ -52,4 +52,8 @@ object FalseNode : ConstantNode() {
 
 object NilNode : ConstantNode() {
     override fun toString(): String = "NilNode"
+}
+
+object NullNode : ConstantNode() {
+    override fun toString(): String = "NullNode"
 }

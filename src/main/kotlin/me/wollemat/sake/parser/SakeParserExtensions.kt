@@ -60,5 +60,6 @@ fun SakeParser.ConstantContext.toAST(): ExpressionNode = when (this) {
     is SakeParser.TrueConstantContext -> TrueNode
     is SakeParser.FalseConstantContext -> FalseNode
     is SakeParser.NilConstantContext -> NilNode
+    is SakeParser.NullConstantContext -> NullNode
     else -> throw UnsupportedOperationException(this.javaClass.canonicalName)
 }
