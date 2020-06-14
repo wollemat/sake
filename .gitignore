@@ -5,3 +5,7 @@
 # Ignore Gradle Files
 .gradle/
 build/
+
+# Ignore ANTLR Generated Files
+src/main/antlr/SakeLexer.tokens
+src/main/gen/

@@ -39,3 +39,8 @@ generateGrammarSource {
     arguments += ['-package', 'me.wollemat.sake.parser']
     outputDirectory = new File(buildDir.toString() + "/generated-src/antlr/main/me/wollemat/sake/parser/")
 }
+
+clean.doLast {
+    file('src/main/antlr/SakeLexer.tokens').delete()
+    file('src/main/gen').deleteDir()
+}

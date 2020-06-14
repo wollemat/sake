@@ -15,13 +15,13 @@ class SakeParserSmokeTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=main, params=[], expr=PrintNode(arg=StringNode(str='Hello, World!')))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=main, params=[], expr=PrintNode(arg=StringNode(str=Hello, World!)))])",
             ast.toString()
         )
     }
 
     @Test
-    fun `abs smoke test`() {
+    fun `abs function smoke test`() {
         val src = """
             fun abs(x) -> if (x < 0) -x else x
         """.trimIndent()
@@ -35,7 +35,7 @@ class SakeParserSmokeTests {
     }
 
     @Test
-    fun `fib smoke test`() {
+    fun `fib function smoke test`() {
         val src = """
             fun fib(n) ->
                 if (n < 0) fail()
@@ -52,7 +52,7 @@ class SakeParserSmokeTests {
     }
 
     @Test
-    fun `ones smoke test`() {
+    fun `ones function smoke test`() {
         val src = """
             fun ones(n) ->
                 if (n < 0) fail()
@@ -69,7 +69,7 @@ class SakeParserSmokeTests {
     }
 
     @Test
-    fun `index smoke test`() {
+    fun `index function smoke test`() {
         val src = """
             fun index(i, li) ->
                 if (i < 0) fail()
@@ -86,7 +86,7 @@ class SakeParserSmokeTests {
     }
 
     @Test
-    fun `largest smoke test`() {
+    fun `largest function smoke test`() {
         val src = """
             fun largest(li) ->
                 if (li == nil) fail()

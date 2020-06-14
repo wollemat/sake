@@ -11,7 +11,7 @@ class SakeParserApplicationTests {
     @CsvSource(
         "fail, FailNode"
     )
-    fun `no argument builtin function application test`(func: String, node: String) {
+    fun `no argument builtin function application parsing test`(func: String, node: String) {
         val src = "fun f() -> $func()"
 
         val ast = SakeStringParser(src).parse()
@@ -28,7 +28,7 @@ class SakeParserApplicationTests {
         "head, HeadNode",
         "tail, TailNode"
     )
-    fun `single argument builtin function application test`(func: String, node: String) {
+    fun `single argument builtin function application parsing test`(func: String, node: String) {
         val src = "fun f() -> $func(null)"
 
         val ast = SakeStringParser(src).parse()
@@ -45,7 +45,7 @@ class SakeParserApplicationTests {
         "bar",
         "baz"
     )
-    fun `no argument user defined function application test`(id: String) {
+    fun `no argument user defined function application parsing test`(id: String) {
         val src = "fun f() -> $id()"
 
         val ast = SakeStringParser(src).parse()
@@ -62,7 +62,7 @@ class SakeParserApplicationTests {
         "bar : x : VariableNode(id=x)",
         "baz : null + null : AddNode(expr1=NullNode, expr2=NullNode)", delimiter = ':'
     )
-    fun `single argument user defined function application test`(id: String, arg: String, node: String) {
+    fun `single argument user defined function application parsing test`(id: String, arg: String, node: String) {
         val src = "fun f() -> $id($arg)"
 
         val ast = SakeStringParser(src).parse()
@@ -74,7 +74,7 @@ class SakeParserApplicationTests {
     }
 
     @Test
-    fun `multiple argument user defined function application test`() {
+    fun `multiple argument user defined function application parsing test`() {
         val src = "fun f() -> foo(1, x, null)"
 
         val ast = SakeStringParser(src).parse()
