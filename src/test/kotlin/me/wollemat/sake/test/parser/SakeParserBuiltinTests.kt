@@ -17,7 +17,7 @@ class SakeParserBuiltinTests {
         val ast = SakeStringParser(src).parse()
 
         Assertions.assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=f, params=[], expr=$node(msg=NullNode))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(msg=NullNode))])",
             ast.toString()
         )
     }

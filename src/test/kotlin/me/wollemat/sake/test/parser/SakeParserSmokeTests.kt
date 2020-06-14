@@ -15,7 +15,7 @@ class SakeParserSmokeTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=main, params=[], expr=PrintNode(msg=StringNode(str=Hello, World!)))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=main, params=[], expr=PrintNode(msg=StringNode(str=Hello, World!)))])",
             ast.toString()
         )
     }
@@ -29,7 +29,7 @@ class SakeParserSmokeTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=abs, params=[x], expr=IfNode(cond=LtNode(expr1=VariableNode(id=x), expr2=IntegerNode(num=0)), exprIf=NegNode(expr=VariableNode(id=x)), exprElif=[], exprElse=VariableNode(id=x)))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=abs, params=[x], expr=IfNode(cond=LtNode(left=VariableNode(id=x), right=IntegerNode(num=0)), left=NegNode(expr=VariableNode(id=x)), right=VariableNode(id=x)))])",
             ast.toString()
         )
     }
@@ -46,7 +46,7 @@ class SakeParserSmokeTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=fib, params=[n], expr=IfNode(cond=LtNode(expr1=VariableNode(id=n), expr2=IntegerNode(num=0)), exprIf=FailNode(msg=StringNode(str=negative index nt allowed)), exprElif=[ElIfNode(cond=LtNode(expr1=VariableNode(id=n), expr2=IntegerNode(num=2)), expr=VariableNode(id=n))], exprElse=AddNode(expr1=ApplicationNode(id=fib, args=[SubNode(expr1=VariableNode(id=n), expr2=IntegerNode(num=2))]), expr2=ApplicationNode(id=fib, args=[SubNode(expr1=VariableNode(id=n), expr2=IntegerNode(num=1))]))))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=fib, params=[n], expr=IfNode(cond=LtNode(left=VariableNode(id=n), right=IntegerNode(num=0)), left=FailNode(msg=StringNode(str=negative index nt allowed)), right=IfNode(cond=LtNode(left=VariableNode(id=n), right=IntegerNode(num=2)), left=VariableNode(id=n), right=AddNode(left=ApplicationNode(id=fib, args=[SubNode(left=VariableNode(id=n), right=IntegerNode(num=2))]), right=ApplicationNode(id=fib, args=[SubNode(left=VariableNode(id=n), right=IntegerNode(num=1))])))))])",
             ast.toString()
         )
     }
@@ -63,7 +63,7 @@ class SakeParserSmokeTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=ones, params=[n], expr=IfNode(cond=LtNode(expr1=VariableNode(id=n), expr2=IntegerNode(num=0)), exprIf=FailNode(msg=StringNode(str=negative length not allowed)), exprElif=[ElIfNode(cond=EqNode(expr1=VariableNode(id=n), expr2=IntegerNode(num=0)), expr=NilNode)], exprElse=AppendNode(expr1=IntegerNode(num=1), expr2=ApplicationNode(id=ones, args=[SubNode(expr1=VariableNode(id=n), expr2=IntegerNode(num=1))]))))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=ones, params=[n], expr=IfNode(cond=LtNode(left=VariableNode(id=n), right=IntegerNode(num=0)), left=FailNode(msg=StringNode(str=negative length not allowed)), right=IfNode(cond=EqNode(left=VariableNode(id=n), right=IntegerNode(num=0)), left=NilNode, right=AppendNode(head=IntegerNode(num=1), tail=ApplicationNode(id=ones, args=[SubNode(left=VariableNode(id=n), right=IntegerNode(num=1))])))))])",
             ast.toString()
         )
     }
@@ -80,7 +80,7 @@ class SakeParserSmokeTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=index, params=[i, li], expr=IfNode(cond=LtNode(expr1=VariableNode(id=i), expr2=IntegerNode(num=0)), exprIf=FailNode(msg=StringNode(str=negative index not allowed)), exprElif=[ElIfNode(cond=EqNode(expr1=VariableNode(id=i), expr2=IntegerNode(num=0)), expr=ApplicationNode(id=head, args=[VariableNode(id=li)]))], exprElse=ApplicationNode(id=index, args=[SubNode(expr1=VariableNode(id=i), expr2=IntegerNode(num=1)), ApplicationNode(id=tail, args=[VariableNode(id=li)])])))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=index, params=[i, li], expr=IfNode(cond=LtNode(left=VariableNode(id=i), right=IntegerNode(num=0)), left=FailNode(msg=StringNode(str=negative index not allowed)), right=IfNode(cond=EqNode(left=VariableNode(id=i), right=IntegerNode(num=0)), left=ApplicationNode(id=head, args=[VariableNode(id=li)]), right=ApplicationNode(id=index, args=[SubNode(left=VariableNode(id=i), right=IntegerNode(num=1)), ApplicationNode(id=tail, args=[VariableNode(id=li)])]))))])",
             ast.toString()
         )
     }
@@ -97,7 +97,7 @@ class SakeParserSmokeTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=largest, params=[li], expr=IfNode(cond=EqNode(expr1=VariableNode(id=li), expr2=NilNode), exprIf=FailNode(msg=StringNode(str=no largest value in empty list)), exprElif=[ElIfNode(cond=GtNode(expr1=ApplicationNode(id=head, args=[VariableNode(id=li)]), expr2=ApplicationNode(id=largest, args=[ApplicationNode(id=tail, args=[VariableNode(id=li)])])), expr=ApplicationNode(id=head, args=[VariableNode(id=li)]))], exprElse=ApplicationNode(id=largest, args=[ApplicationNode(id=tail, args=[VariableNode(id=li)])])))])",
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=largest, params=[li], expr=IfNode(cond=EqNode(left=VariableNode(id=li), right=NilNode), left=FailNode(msg=StringNode(str=no largest value in empty list)), right=IfNode(cond=GtNode(left=ApplicationNode(id=head, args=[VariableNode(id=li)]), right=ApplicationNode(id=largest, args=[ApplicationNode(id=tail, args=[VariableNode(id=li)])])), left=ApplicationNode(id=head, args=[VariableNode(id=li)]), right=ApplicationNode(id=largest, args=[ApplicationNode(id=tail, args=[VariableNode(id=li)])]))))])",
             ast.toString()
         )
     }

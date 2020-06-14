@@ -31,16 +31,13 @@ expression  :   OPEN expression CLOSE                                           
             |   expression NEQ expression                                                   # NotEqualsExpression
             |   expression AND expression                                                   # AndExpression
             |   expression OR expression                                                    # OrExpression
-            |   IF OPEN expression CLOSE expression (elif)* ELSE expression                 # IfExpression
+            |   IF OPEN expression CLOSE expression (ELIF OPEN expression CLOSE expression)* ELSE expression # IfExpression
             |   expression APPEND expression                                                # AppendExpression
             |   builtin                                                                     # BuiltinExpression
             |   application                                                                 # ApplicationExpression
             |   primitive                                                                   # PrimitiveExpression
             |   constant                                                                    # ConstantExpression
             |   ID                                                                          # VariableExpression
-            ;
-
-elif        :   ELIF OPEN expression CLOSE expression                                       # ElIfExpression
             ;
 
 application :   ID OPEN CLOSE                                                               # NoArgumentApplication
