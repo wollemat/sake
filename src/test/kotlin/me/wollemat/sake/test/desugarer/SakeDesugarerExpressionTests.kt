@@ -8,9 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class SakeDesugarerExpressionTests {
-    private val base = "DesugaredAbstractSyntaxTree(funcs=[FunctionCore(id=f, params=[], expr="
-    private val end = ")])"
-
     @ParameterizedTest
     @CsvSource(
         "+, AddCore",
@@ -24,7 +21,7 @@ class SakeDesugarerExpressionTests {
         val dast = SakeDesugarer(SakeStringParser(src).parse()).desugar()
 
         Assertions.assertEquals(
-            "$base$core(left=IntegerCore(num=1), right=IntegerCore(num=2))$end",
+            "${BASE}$core(left=IntegerCore(num=1), right=IntegerCore(num=2))$END",
             dast.toString()
         )
     }
@@ -36,7 +33,7 @@ class SakeDesugarerExpressionTests {
         val dast = SakeDesugarer(SakeStringParser(src).parse()).desugar()
 
         Assertions.assertEquals(
-            "${base}AddCore(left=IntegerCore(num=1), right=MultCore(left=IntegerCore(num=-1), right=IntegerCore(num=2)))$end",
+            "${BASE}AddCore(left=IntegerCore(num=1), right=MultCore(left=IntegerCore(num=-1), right=IntegerCore(num=2)))$END",
             dast.toString()
         )
     }

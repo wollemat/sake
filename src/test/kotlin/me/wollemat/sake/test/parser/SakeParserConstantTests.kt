@@ -19,7 +19,7 @@ class SakeParserConstantTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node)])",
+            "${BASE}$node$END",
             ast.toString()
         )
     }

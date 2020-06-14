@@ -19,7 +19,7 @@ class SakeParserApplicationTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=ApplicationNode(id=$id, args=[]))])",
+            "${BASE}ApplicationNode(id=$id, args=[])$END",
             ast.toString()
         )
     }
@@ -36,7 +36,7 @@ class SakeParserApplicationTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=ApplicationNode(id=$id, args=[$node]))])",
+            "${BASE}ApplicationNode(id=$id, args=[$node])$END",
             ast.toString()
         )
     }
@@ -48,7 +48,7 @@ class SakeParserApplicationTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=ApplicationNode(id=foo, args=[IntegerNode(num=1), VariableNode(id=x), NullNode]))])",
+            "${BASE}ApplicationNode(id=foo, args=[IntegerNode(num=1), VariableNode(id=x), NullNode])$END",
             ast.toString()
         )
     }

@@ -28,7 +28,7 @@ class SakeParserPrecedenceTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=OrNode(left=VariableNode(id=y), right=VariableNode(id=z))))])",
+            "${BASE}$node(left=VariableNode(id=x), right=OrNode(left=VariableNode(id=y), right=VariableNode(id=z)))$END",
             ast.toString()
         )
     }
@@ -44,7 +44,7 @@ class SakeParserPrecedenceTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(expr=OrNode(left=VariableNode(id=x), right=VariableNode(id=y))))])",
+            "${BASE}$node(expr=OrNode(left=VariableNode(id=x), right=VariableNode(id=y)))$END",
             ast.toString()
         )
     }
@@ -71,9 +71,12 @@ class SakeParserPrecedenceTests {
         val astDiv = SakeStringParser(srcDiv).parse()
         val astRem = SakeStringParser(srcRem).parse()
 
-        val expectedMult = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"MultNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
-        val expectedDiv = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"DivNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
-        val expectedRem = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"RemNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
+        val expectedMult =
+            "${BASE}$node(left=VariableNode(id=x), right=${"MultNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
+        val expectedDiv =
+            "${BASE}$node(left=VariableNode(id=x), right=${"DivNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
+        val expectedRem =
+            "${BASE}$node(left=VariableNode(id=x), right=${"RemNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
 
         assertEquals(expectedMult, astMult.toString())
         assertEquals(expectedDiv, astDiv.toString())
@@ -98,8 +101,10 @@ class SakeParserPrecedenceTests {
         val astAdd = SakeStringParser(srcAdd).parse()
         val astSub = SakeStringParser(srcSub).parse()
 
-        val expectedAdd = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"AddNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
-        val expectedSub = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"SubNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
+        val expectedAdd =
+            "${BASE}$node(left=VariableNode(id=x), right=${"AddNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
+        val expectedSub =
+            "${BASE}$node(left=VariableNode(id=x), right=${"SubNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
 
         assertEquals(expectedAdd, astAdd.toString())
         assertEquals(expectedSub, astSub.toString())
@@ -123,10 +128,14 @@ class SakeParserPrecedenceTests {
         val astLe = SakeStringParser(srcLe).parse()
         val astLt = SakeStringParser(srcLt).parse()
 
-        val expectedGe = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"GeNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
-        val expectedGt = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"GtNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
-        val expectedLe = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"LeNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
-        val expectedLt = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"LtNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
+        val expectedGe =
+            "${BASE}$node(left=VariableNode(id=x), right=${"GeNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
+        val expectedGt =
+            "${BASE}$node(left=VariableNode(id=x), right=${"GtNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
+        val expectedLe =
+            "${BASE}$node(left=VariableNode(id=x), right=${"LeNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
+        val expectedLt =
+            "${BASE}$node(left=VariableNode(id=x), right=${"LtNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
 
         assertEquals(expectedGe, astGe.toString())
         assertEquals(expectedGt, astGt.toString())
@@ -146,8 +155,10 @@ class SakeParserPrecedenceTests {
         val astEq = SakeStringParser(srcEq).parse()
         val astNeq = SakeStringParser(srcNeq).parse()
 
-        val expectedEq = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"EqNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
-        val expectedNeq = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"NeqNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
+        val expectedEq =
+            "${BASE}$node(left=VariableNode(id=x), right=${"EqNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
+        val expectedNeq =
+            "${BASE}$node(left=VariableNode(id=x), right=${"NeqNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
 
         assertEquals(expectedEq, astEq.toString())
         assertEquals(expectedNeq, astNeq.toString())
@@ -162,7 +173,8 @@ class SakeParserPrecedenceTests {
 
         val astAnd = SakeStringParser(srcAnd).parse()
 
-        val expectedAnd = "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(left=VariableNode(id=x), right=${"AndNode"}(left=VariableNode(id=y), right=VariableNode(id=z))))])"
+        val expectedAnd =
+            "${BASE}$node(left=VariableNode(id=x), right=${"AndNode"}(left=VariableNode(id=y), right=VariableNode(id=z)))$END"
 
         assertEquals(expectedAnd, astAnd.toString())
     }
