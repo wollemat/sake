@@ -1,7 +1,7 @@
 package me.wollemat.sake.test.parser
 
 import me.wollemat.sake.parser.SakeStringParser
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -17,7 +17,7 @@ class SakeParserPrimitiveTests {
 
         val ast = SakeStringParser(src).parse()
 
-        Assertions.assertEquals(
+        assertEquals(
             "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node)])",
             ast.toString()
         )
@@ -29,7 +29,7 @@ class SakeParserPrimitiveTests {
 
         val ast = SakeStringParser(src).parse()
 
-        Assertions.assertEquals(
+        assertEquals(
             "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=StringNode(str=Hello, World!))])",
             ast.toString()
         )

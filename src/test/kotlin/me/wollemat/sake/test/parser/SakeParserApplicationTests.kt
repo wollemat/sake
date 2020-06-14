@@ -1,7 +1,7 @@
 package me.wollemat.sake.test.parser
 
 import me.wollemat.sake.parser.SakeStringParser
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -16,7 +16,7 @@ class SakeParserApplicationTests {
 
         val ast = SakeStringParser(src).parse()
 
-        Assertions.assertEquals(
+        assertEquals(
             "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node)])",
             ast.toString()
         )
@@ -33,7 +33,7 @@ class SakeParserApplicationTests {
 
         val ast = SakeStringParser(src).parse()
 
-        Assertions.assertEquals(
+        assertEquals(
             "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(arg=NullNode))])",
             ast.toString()
         )
@@ -50,7 +50,7 @@ class SakeParserApplicationTests {
 
         val ast = SakeStringParser(src).parse()
 
-        Assertions.assertEquals(
+        assertEquals(
             "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=FunctionApplicationNode(id=$id, args=[]))])",
             ast.toString()
         )
@@ -67,7 +67,7 @@ class SakeParserApplicationTests {
 
         val ast = SakeStringParser(src).parse()
 
-        Assertions.assertEquals(
+        assertEquals(
             "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=FunctionApplicationNode(id=$id, args=[$node]))])",
             ast.toString()
         )
@@ -79,7 +79,7 @@ class SakeParserApplicationTests {
 
         val ast = SakeStringParser(src).parse()
 
-        Assertions.assertEquals(
+        assertEquals(
             "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=FunctionApplicationNode(id=foo, args=[IntegerNode(num=1), VariableNode(id=x), NullNode]))])",
             ast.toString()
         )

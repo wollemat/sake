@@ -13,6 +13,7 @@ fun SakeParser.FunctionContext.toAST(): FunctionNode = when (this) {
 }
 
 fun SakeParser.ExpressionContext.toAST(): ExpressionNode = when (this) {
+    is SakeParser.GroupingExpressionContext -> expression().toAST()
     is SakeParser.IfExpressionContext -> IfNode(expression(0).toAST(), expression(1).toAST(), expression(2).toAST())
     is SakeParser.AdditionExpressionContext -> AddNode(expression(0).toAST(), expression(1).toAST())
     is SakeParser.SubtractionExpressionContext -> SubNode(expression(0).toAST(), expression(1).toAST())

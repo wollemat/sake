@@ -74,4 +74,16 @@ class SakeParserExpressionTests {
             ast.toString()
         )
     }
+
+    @Test
+    fun `grouping expression parsing test`() {
+        val src = "fun f() -> (null)"
+
+        val ast = SakeStringParser(src).parse()
+
+        assertEquals(
+            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=NullNode)])",
+            ast.toString()
+        )
+    }
 }

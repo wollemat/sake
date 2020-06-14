@@ -12,22 +12,25 @@ function    :   FUN ID OPEN CLOSE ARROW expression                      # NoPara
             |   FUN ID OPEN (ID COMMA)* ID  CLOSE ARROW expression      # MultipleParameterFunction
             ;
 
-expression  :   IF OPEN expression CLOSE expression ELSE expression     # IfExpression
-            |   expression PLUS expression                              # AdditionExpression
-            |   expression SUB expression                               # SubtractionExpression
+// ORDER is important for precedence!
+
+expression  :   OPEN expression CLOSE                                   # GroupingExpression
+            |   SUB expression                                          # NegationExpression
+            |   NOT expression                                          # NotExpression
             |   expression MULT expression                              # MultiplicationExpression
             |   expression DIV expression                               # DivisionExpression
             |   expression REM expression                               # RemainderExpression
-            |   SUB expression                                          # NegationExpression
-            |   expression AND expression                               # AndExpression
-            |   expression OR expression                                # OrExpression
-            |   NOT expression                                          # NotExpression
+            |   expression PLUS expression                              # AdditionExpression
+            |   expression SUB expression                               # SubtractionExpression
             |   expression GE expression                                # GreaterEqualsExpression
             |   expression GT expression                                # GreaterThanExpression
             |   expression LE expression                                # LessEqualsExpression
             |   expression LT expression                                # LessThanExpression
             |   expression EQ expression                                # EqualsExpression
             |   expression NEQ expression                               # NotEqualsExpression
+            |   expression AND expression                               # AndExpression
+            |   expression OR expression                                # OrExpression
+            |   IF OPEN expression CLOSE expression ELSE expression     # IfExpression
             |   expression APPEND expression                            # AppendExpression
             |   application                                             # ApplicationExpression
             |   ID                                                      # VariableExpression
