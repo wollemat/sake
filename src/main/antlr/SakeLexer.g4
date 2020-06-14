@@ -12,6 +12,7 @@ FUN         :   'fun';
 ARROW       :   '->';
 
 IF          :   'if';
+ELIF        :   'elif';
 ELSE        :   'else';
 
 TRUE        :   'true';
@@ -24,8 +25,6 @@ OR          :   'or';
 NOT         :   'not';
 
 PRINT       :   'print';
-HEAD        :   'head';
-TAIL        :   'tail';
 FAIL        :   'fail';
 
 //  Special characters
@@ -35,6 +34,8 @@ DOT         :   '.';
 COMMA       :   ',';
 OPEN        :   '(';
 CLOSE       :   ')';
+SQUAREOPEN  :   '[';
+SQUARECLOSE :   ']';
 
 //  Reserved operators
 

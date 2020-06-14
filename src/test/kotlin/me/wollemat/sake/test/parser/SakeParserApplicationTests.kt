@@ -9,38 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource
 class SakeParserApplicationTests {
     @ParameterizedTest
     @CsvSource(
-        "fail, FailNode"
-    )
-    fun `no argument builtin function application parsing test`(func: String, node: String) {
-        val src = "fun f() -> $func()"
-
-        val ast = SakeStringParser(src).parse()
-
-        assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node)])",
-            ast.toString()
-        )
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        "print, PrintNode",
-        "head, HeadNode",
-        "tail, TailNode"
-    )
-    fun `single argument builtin function application parsing test`(func: String, node: String) {
-        val src = "fun f() -> $func(null)"
-
-        val ast = SakeStringParser(src).parse()
-
-        assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=$node(arg=NullNode))])",
-            ast.toString()
-        )
-    }
-
-    @ParameterizedTest
-    @CsvSource(
         "foo",
         "bar",
         "baz"
@@ -51,7 +19,7 @@ class SakeParserApplicationTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=FunctionApplicationNode(id=$id, args=[]))])",
+            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=f, params=[], expr=ApplicationNode(id=$id, args=[]))])",
             ast.toString()
         )
     }
@@ -68,7 +36,7 @@ class SakeParserApplicationTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=FunctionApplicationNode(id=$id, args=[$node]))])",
+            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=f, params=[], expr=ApplicationNode(id=$id, args=[$node]))])",
             ast.toString()
         )
     }
@@ -80,7 +48,7 @@ class SakeParserApplicationTests {
         val ast = SakeStringParser(src).parse()
 
         assertEquals(
-            "AbstractSyntaxTree(funcs=[FunctionNode(id=f, params=[], expr=FunctionApplicationNode(id=foo, args=[IntegerNode(num=1), VariableNode(id=x), NullNode]))])",
+            "AbstractSyntaxTree(funcs=[FunctionDeclaration(id=f, params=[], expr=ApplicationNode(id=foo, args=[IntegerNode(num=1), VariableNode(id=x), NullNode]))])",
             ast.toString()
         )
     }
