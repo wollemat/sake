@@ -4,6 +4,7 @@ import me.wollemat.sake.parser.AbstractSyntaxTree
 import me.wollemat.sake.parser.AddNode
 import me.wollemat.sake.parser.AndNode
 import me.wollemat.sake.parser.AppendNode
+import me.wollemat.sake.parser.ApplicationNode
 import me.wollemat.sake.parser.DivNode
 import me.wollemat.sake.parser.EqNode
 import me.wollemat.sake.parser.ExpressionNode
@@ -32,6 +33,7 @@ import me.wollemat.sake.parser.TrueNode
 import me.wollemat.sake.parser.VariableNode
 
 const val PRIMARY_FUNCTION_NAME = "foo"
+const val SECONDARY_FUNCTION_NAME = "baz"
 
 val STRING_NODE = StringNode("Hello, World!")
 val FLOAT_NODE = FloatNode(3.14)
@@ -94,6 +96,13 @@ enum class IfOperation(val src: String) {
     TRIPLE_ELIF("if (true) ${VARIABLE_NODE_X.id} elif (false) ${VARIABLE_NODE_Y.id} elif (true) ${VARIABLE_NODE_Z.id} elif (false) ${VARIABLE_NODE_W.id} else ${VARIABLE_NODE_V.id}")
 }
 
+enum class ApplicationOperation(val src: String) {
+    NO_PARAM_APPLICATION("$SECONDARY_FUNCTION_NAME()"),
+    SINGLE_PARAM_APPLICATION("$SECONDARY_FUNCTION_NAME(${VARIABLE_NODE_X.id})"),
+    DOUBLE_PARAM_APPLICATION("$SECONDARY_FUNCTION_NAME(${VARIABLE_NODE_X.id}, ${VARIABLE_NODE_Y.id})"),
+    TRIPLE_PARAM_APPLICATION("$SECONDARY_FUNCTION_NAME(${VARIABLE_NODE_X.id}, ${VARIABLE_NODE_Y.id}, ${VARIABLE_NODE_Z.id})")
+}
+
 fun expr(op: ConstantOperation): ExpressionNode = when (op) {
     ConstantOperation.TRUE -> TrueNode
     ConstantOperation.FALSE -> FalseNode
@@ -139,4 +148,11 @@ fun expr(op: IfOperation): ExpressionNode = when (op) {
     IfOperation.SINGLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, VARIABLE_NODE_Z))
     IfOperation.DOUBLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, IfNode(TrueNode, VARIABLE_NODE_Z, VARIABLE_NODE_W)))
     IfOperation.TRIPLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, IfNode(TrueNode, VARIABLE_NODE_Z, IfNode(FalseNode, VARIABLE_NODE_W, VARIABLE_NODE_V))))
+}
+
+fun expr(op: ApplicationOperation): ExpressionNode = when (op) {
+    ApplicationOperation.NO_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, emptyList())
+    ApplicationOperation.SINGLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X))
+    ApplicationOperation.DOUBLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y))
+    ApplicationOperation.TRIPLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y, VARIABLE_NODE_Z))
 }
