@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.CsvSource
 class SakeParserPrecedenceTests {
     @Test
     fun `grouping precedence test`() {
-        val srcDefault = src("1 + 2 * 3")
-        val srcGrouped = src("1 + (2 * 3)")
+        val srcDefault = src("x + y * z")
+        val srcGrouped = src("x + (y * z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -32,8 +32,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `negation precedence test`(op: String) {
-        val srcDefault = src("1 $op -2")
-        val srcGrouped = src("1 $op (-2)")
+        val srcDefault = src("x $op -y")
+        val srcGrouped = src("x $op (-y)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -55,8 +55,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `not precedence test`(op: String) {
-        val srcDefault = src("1 $op not 2")
-        val srcGrouped = src("1 $op (not 2)")
+        val srcDefault = src("x $op not y")
+        val srcGrouped = src("x $op (not y)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -75,8 +75,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `multiplication precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 * 3")
-        val srcGrouped = src("1 $op (2 * 3)")
+        val srcDefault = src("x $op y * z")
+        val srcGrouped = src("x $op (y * z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -95,8 +95,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `division precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 / 3")
-        val srcGrouped = src("1 $op (2 / 3)")
+        val srcDefault = src("x $op y / z")
+        val srcGrouped = src("x $op (y / z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -115,8 +115,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `remainder precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 % 3")
-        val srcGrouped = src("1 $op (2 % 3)")
+        val srcDefault = src("x $op y % z")
+        val srcGrouped = src("x $op (y % z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -133,8 +133,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `addition precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 + 3")
-        val srcGrouped = src("1 $op (2 + 3)")
+        val srcDefault = src("x $op y + z")
+        val srcGrouped = src("x $op (y + z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -151,8 +151,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `subtraction precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 - 3")
-        val srcGrouped = src("1 $op (2 - 3)")
+        val srcDefault = src("x $op y - z")
+        val srcGrouped = src("x $op (y - z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -165,8 +165,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `ge precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 >= 3")
-        val srcGrouped = src("1 $op (2 >= 3)")
+        val srcDefault = src("x $op y >= z")
+        val srcGrouped = src("x $op (y >= z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -179,8 +179,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `gt precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 > 3")
-        val srcGrouped = src("1 $op (2 > 3)")
+        val srcDefault = src("x $op y > z")
+        val srcGrouped = src("x $op (y > z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -193,8 +193,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `le precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 <= 3")
-        val srcGrouped = src("1 $op (2 <= 3)")
+        val srcDefault = src("x $op y <= z")
+        val srcGrouped = src("x $op (y <= z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -207,8 +207,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `lt precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 < 3")
-        val srcGrouped = src("1 $op (2 < 3)")
+        val srcDefault = src("x $op y < z")
+        val srcGrouped = src("x $op (y < z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -219,8 +219,8 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `eq precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 == 3")
-        val srcGrouped = src("1 $op (2 == 3)")
+        val srcDefault = src("x $op y == z")
+        val srcGrouped = src("x $op (y == z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
@@ -231,16 +231,16 @@ class SakeParserPrecedenceTests {
         "or"
     )
     fun `neq precedence test`(op: String) {
-        val srcDefault = src("1 $op 2 != 3")
-        val srcGrouped = src("1 $op (2 != 3)")
+        val srcDefault = src("x $op y != z")
+        val srcGrouped = src("x $op (y != z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
 
     @Test
     fun `and precedence test`() {
-        val srcDefault = src("1 or 2 and 3")
-        val srcGrouped = src("1 or (2 and 3)")
+        val srcDefault = src("x or y and z")
+        val srcGrouped = src("x or (y and z)")
 
         assertEquals(SakeStringParser(srcGrouped).parse(), SakeStringParser(srcDefault).parse())
     }
