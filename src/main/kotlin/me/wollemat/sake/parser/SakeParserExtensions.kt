@@ -48,6 +48,7 @@ fun SakeParser.ExpressionContext.toAST(): ExpressionNode = when (this) {
     is SakeParser.PrimitiveExpressionContext -> primitive().toAST()
     is SakeParser.ConstantExpressionContext -> constant().toAST()
     is SakeParser.BuiltinExpressionContext -> builtin().toAST()
+    is SakeParser.LambdaExpressionContext -> lambda().toAST()
     else -> throw UnsupportedOperationException()
 }
 
@@ -55,6 +56,13 @@ fun SakeParser.ApplicationContext.toAST(): ApplicationNode = when (this) {
     is SakeParser.NoArgumentApplicationContext -> ApplicationNode(ID().text, emptyList())
     is SakeParser.ArgumentApplciationContext -> ApplicationNode(ID().text, listOf(expression().toAST()))
     is SakeParser.MultipleArgumentsApplicationContext -> ApplicationNode(ID().text, expression().map { it.toAST() })
+    else -> throw UnsupportedOperationException()
+}
+
+fun SakeParser.LambdaContext.toAST(): LambdaNode = when (this) {
+    is SakeParser.NoParamLambdaContext -> LambdaNode(emptyList(), expression().toAST())
+    is SakeParser.ParamLambdaContext -> LambdaNode(listOf(ID().text), expression().toAST())
+    is SakeParser.MultipleParamsLambdaContext -> LambdaNode(ID().map { it.text }, expression().toAST())
     else -> throw UnsupportedOperationException()
 }
 

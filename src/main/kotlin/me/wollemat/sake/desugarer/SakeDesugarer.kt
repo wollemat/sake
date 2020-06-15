@@ -16,6 +16,7 @@ import me.wollemat.sake.parser.GeNode
 import me.wollemat.sake.parser.GtNode
 import me.wollemat.sake.parser.IfNode
 import me.wollemat.sake.parser.IntegerNode
+import me.wollemat.sake.parser.LambdaNode
 import me.wollemat.sake.parser.LeNode
 import me.wollemat.sake.parser.LtNode
 import me.wollemat.sake.parser.MultNode
@@ -63,6 +64,7 @@ class SakeDesugarer(val ast: AbstractSyntaxTree) {
         is AppendNode -> AppendCore(desugar(expr.head), desugar(expr.tail))
         is VariableNode -> VariableCore(expr.id)
         is ApplicationNode -> TODO()
+        is LambdaNode -> TODO()
         is PrintNode -> ApplicationCore("print", listOf(desugar(expr.msg)))
         is FailNode -> ApplicationCore("fail", listOf(desugar(expr.msg)))
         is StringNode -> StringCore(expr.str)

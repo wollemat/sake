@@ -37,7 +37,13 @@ expression  :   OPEN expression CLOSE                                           
             |   application                                                                 # ApplicationExpression
             |   primitive                                                                   # PrimitiveExpression
             |   constant                                                                    # ConstantExpression
+            |   lambda                                                                      # LambdaExpression
             |   ID                                                                          # VariableExpression
+            ;
+
+lambda      :   LAMBDA OPEN CLOSE ARROW expression                                          # NoParamLambda
+            |   LAMBDA OPEN ID CLOSE ARROW expression                                       # ParamLambda
+            |   LAMBDA OPEN (ID COMMA)* ID CLOSE ARROW expression                           # MultipleParamsLambda
             ;
 
 application :   ID OPEN CLOSE                                                               # NoArgumentApplication

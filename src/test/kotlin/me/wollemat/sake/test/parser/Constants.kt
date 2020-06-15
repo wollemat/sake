@@ -16,6 +16,7 @@ import me.wollemat.sake.parser.GeNode
 import me.wollemat.sake.parser.GtNode
 import me.wollemat.sake.parser.IfNode
 import me.wollemat.sake.parser.IntegerNode
+import me.wollemat.sake.parser.LambdaNode
 import me.wollemat.sake.parser.LeNode
 import me.wollemat.sake.parser.LtNode
 import me.wollemat.sake.parser.MultNode
@@ -103,6 +104,13 @@ enum class ApplicationOperation(val src: String) {
     TRIPLE_PARAM_APPLICATION("$SECONDARY_FUNCTION_NAME(${VARIABLE_NODE_X.id}, ${VARIABLE_NODE_Y.id}, ${VARIABLE_NODE_Z.id})")
 }
 
+enum class LambdaOperation(val src: String) {
+    NO_PARAM_LAMBDA("lambda () -> null"),
+    SINGLE_PARAM_LAMBDA("lambda (${VARIABLE_NODE_X.id}) -> null"),
+    DOUBLE_PARAM_LAMBDA("lambda (${VARIABLE_NODE_X.id}, ${VARIABLE_NODE_Y.id}) -> null"),
+    TRIPLE_PARAM_LAMBDA("lambda (${VARIABLE_NODE_X.id}, ${VARIABLE_NODE_Y.id}, ${VARIABLE_NODE_Z.id}) -> null")
+}
+
 fun expr(op: ConstantOperation): ExpressionNode = when (op) {
     ConstantOperation.TRUE -> TrueNode
     ConstantOperation.FALSE -> FalseNode
@@ -155,4 +163,11 @@ fun expr(op: ApplicationOperation): ExpressionNode = when (op) {
     ApplicationOperation.SINGLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X))
     ApplicationOperation.DOUBLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y))
     ApplicationOperation.TRIPLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y, VARIABLE_NODE_Z))
+}
+
+fun expr(op: LambdaOperation): ExpressionNode = when (op) {
+    LambdaOperation.NO_PARAM_LAMBDA -> LambdaNode(emptyList(), NullNode)
+    LambdaOperation.SINGLE_PARAM_LAMBDA -> LambdaNode(listOf(VARIABLE_NODE_X.id), NullNode)
+    LambdaOperation.DOUBLE_PARAM_LAMBDA -> LambdaNode(listOf(VARIABLE_NODE_X.id, VARIABLE_NODE_Y.id), NullNode)
+    LambdaOperation.TRIPLE_PARAM_LAMBDA -> LambdaNode(listOf(VARIABLE_NODE_X.id, VARIABLE_NODE_Y.id, VARIABLE_NODE_Z.id), NullNode)
 }

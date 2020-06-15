@@ -31,6 +31,7 @@ data class FailNode(val msg: ExpressionNode) : ExpressionNode()
 data class StringNode(val str: String) : ExpressionNode()
 data class FloatNode(val num: Double) : ExpressionNode()
 data class IntegerNode(val num: Int) : ExpressionNode()
+data class LambdaNode(val params: List<String>, val expr: ExpressionNode) : ExpressionNode()
 
 object TrueNode : ExpressionNode() {
     override fun toString(): String = "TrueNode"

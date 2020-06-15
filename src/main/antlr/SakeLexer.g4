@@ -9,6 +9,7 @@ fragment UPPERCASE  :   [A-Z];
 //  Reserved keywords
 
 FUN         :   'fun';
+LAMBDA      :   'lambda';
 ARROW       :   '->';
 
 IF          :   'if';
