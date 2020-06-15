@@ -19,7 +19,7 @@ data class AppendCore(val left: ExpressionCore, val right: ExpressionCore) : Exp
 data class VariableCore(val id: String) : ExpressionCore()
 data class ApplicationCore(val id: String, val args: List<ExpressionCore>) : ExpressionCore()
 data class StringCore(val str: String) : ExpressionCore()
-data class FloatCore(val num: Float) : ExpressionCore()
+data class FloatCore(val num: Double) : ExpressionCore()
 data class IntegerCore(val num: Int) : ExpressionCore()
 
 object TrueCore : ExpressionCore() {

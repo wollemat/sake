@@ -29,7 +29,7 @@ data class ApplicationNode(val id: String, val args: List<ExpressionNode>) : Exp
 data class PrintNode(val msg: ExpressionNode) : ExpressionNode()
 data class FailNode(val msg: ExpressionNode) : ExpressionNode()
 data class StringNode(val str: String) : ExpressionNode()
-data class FloatNode(val num: Float) : ExpressionNode()
+data class FloatNode(val num: Double) : ExpressionNode()
 data class IntegerNode(val num: Int) : ExpressionNode()
 
 object TrueNode : ExpressionNode() {

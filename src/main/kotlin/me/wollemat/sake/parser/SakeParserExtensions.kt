@@ -60,7 +60,7 @@ fun SakeParser.ApplicationContext.toAST(): ApplicationNode = when (this) {
 
 fun SakeParser.PrimitiveContext.toAST(): ExpressionNode = when (this) {
     is SakeParser.StringPrimitiveContext -> StringNode(STRING().text.dropLast(1).drop(1))
-    is SakeParser.FloatPrimitiveContext -> FloatNode(FLOAT().text.toFloat())
+    is SakeParser.FloatPrimitiveContext -> FloatNode(FLOAT().text.toDouble())
     is SakeParser.IntegerPrimitiveContext -> IntegerNode(INTEGER().text.toInt())
     else -> throw UnsupportedOperationException()
 }
