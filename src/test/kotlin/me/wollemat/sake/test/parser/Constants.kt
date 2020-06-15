@@ -13,6 +13,7 @@ import me.wollemat.sake.parser.FloatNode
 import me.wollemat.sake.parser.FunctionNode
 import me.wollemat.sake.parser.GeNode
 import me.wollemat.sake.parser.GtNode
+import me.wollemat.sake.parser.IfNode
 import me.wollemat.sake.parser.IntegerNode
 import me.wollemat.sake.parser.LeNode
 import me.wollemat.sake.parser.LtNode
@@ -37,31 +38,34 @@ val FLOAT_NODE = FloatNode(3.14)
 val INT_NODE = IntegerNode(1965)
 val VARIABLE_NODE_X = VariableNode("x")
 val VARIABLE_NODE_Y = VariableNode("y")
+val VARIABLE_NODE_Z = VariableNode("z")
+val VARIABLE_NODE_W = VariableNode("w")
+val VARIABLE_NODE_V = VariableNode("v")
 
 fun src(expr: String) = "fun $PRIMARY_FUNCTION_NAME() -> $expr"
 
 fun ast(expr: ExpressionNode): AbstractSyntaxTree =
     AbstractSyntaxTree(listOf(FunctionNode(PRIMARY_FUNCTION_NAME, emptyList(), expr)))
 
-enum class ConstantOperation(val op: String) {
+enum class ConstantOperation(val src: String) {
     TRUE("true"),
     FALSE("false"),
     NIL("nil"),
     NULL("null")
 }
 
-enum class PrimitiveOperation(val op: String) {
+enum class PrimitiveOperation(val src: String) {
     STRING("'${STRING_NODE.str}'"),
     INT(INT_NODE.num.toString()),
     FLOAT(FLOAT_NODE.num.toString())
 }
 
-enum class BuiltinOperation(val op: String) {
+enum class BuiltinOperation(val src: String) {
     PRINT("print('${STRING_NODE.str}')"),
     FAIL("fail('${STRING_NODE.str}')")
 }
 
-enum class InfixOperation(val op: String) {
+enum class InfixOperation(val src: String) {
     ADD("${VARIABLE_NODE_X.id} + ${VARIABLE_NODE_Y.id}"),
     SUB("${VARIABLE_NODE_X.id} - ${VARIABLE_NODE_Y.id}"),
     MULT("${VARIABLE_NODE_X.id} * ${VARIABLE_NODE_Y.id}"),
@@ -78,9 +82,16 @@ enum class InfixOperation(val op: String) {
     APPEND("${VARIABLE_NODE_X.id} :: ${VARIABLE_NODE_Y.id}")
 }
 
-enum class UnaryOperation(val op: String) {
+enum class UnaryOperation(val src: String) {
     NEG("- ${VARIABLE_NODE_X.id}"),
     NOT("not ${VARIABLE_NODE_X.id}")
+}
+
+enum class IfOperation(val src: String) {
+    NO_ELIF("if (true) ${VARIABLE_NODE_X.id} else ${VARIABLE_NODE_Y.id}"),
+    SINGLE_ELIF("if (true) ${VARIABLE_NODE_X.id} elif (false) ${VARIABLE_NODE_Y.id} else ${VARIABLE_NODE_Z.id}"),
+    DOUBLE_ELIF("if (true) ${VARIABLE_NODE_X.id} elif (false) ${VARIABLE_NODE_Y.id} elif (true) ${VARIABLE_NODE_Z.id} else ${VARIABLE_NODE_W.id}"),
+    TRIPLE_ELIF("if (true) ${VARIABLE_NODE_X.id} elif (false) ${VARIABLE_NODE_Y.id} elif (true) ${VARIABLE_NODE_Z.id} elif (false) ${VARIABLE_NODE_W.id} else ${VARIABLE_NODE_V.id}")
 }
 
 fun expr(op: ConstantOperation): ExpressionNode = when (op) {
@@ -121,4 +132,11 @@ fun expr(op: InfixOperation): ExpressionNode = when (op) {
 fun expr(op: UnaryOperation): ExpressionNode = when (op) {
     UnaryOperation.NOT -> NotNode(VARIABLE_NODE_X)
     UnaryOperation.NEG -> NegNode(VARIABLE_NODE_X)
+}
+
+fun expr(op: IfOperation): ExpressionNode = when (op) {
+    IfOperation.NO_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, VARIABLE_NODE_Y)
+    IfOperation.SINGLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, VARIABLE_NODE_Z))
+    IfOperation.DOUBLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, IfNode(TrueNode, VARIABLE_NODE_Z, VARIABLE_NODE_W)))
+    IfOperation.TRIPLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, IfNode(TrueNode, VARIABLE_NODE_Z, IfNode(FalseNode, VARIABLE_NODE_W, VARIABLE_NODE_V))))
 }
