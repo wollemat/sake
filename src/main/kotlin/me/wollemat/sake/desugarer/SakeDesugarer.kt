@@ -12,6 +12,7 @@ import me.wollemat.sake.parser.ExpressionNode
 import me.wollemat.sake.parser.FailNode
 import me.wollemat.sake.parser.FalseNode
 import me.wollemat.sake.parser.FloatNode
+import me.wollemat.sake.parser.FunctionNode
 import me.wollemat.sake.parser.GeNode
 import me.wollemat.sake.parser.GtNode
 import me.wollemat.sake.parser.IfNode
@@ -34,8 +35,9 @@ import me.wollemat.sake.parser.TrueNode
 import me.wollemat.sake.parser.VariableNode
 
 class SakeDesugarer(val ast: AbstractSyntaxTree) {
-    fun desugar(): DesugaredAbstractSyntaxTree =
-        DesugaredAbstractSyntaxTree(ast.funcs.map { FunctionCore(it.id, it.params, desugar(it.expr)) })
+    fun desugar(): DesugaredAbstractSyntaxTree = DesugaredAbstractSyntaxTree(ast.funcs.map { curry(it) })
+
+    private fun curry(func: FunctionNode): FunctionCore = TODO()
 
     private fun desugar(expr: ExpressionNode): ExpressionCore = when (expr) {
         is IfNode -> IfCore(desugar(expr.cond), desugar(expr.left), desugar(expr.right))

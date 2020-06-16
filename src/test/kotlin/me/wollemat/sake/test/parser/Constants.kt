@@ -154,20 +154,45 @@ fun expr(op: UnaryOperation): ExpressionNode = when (op) {
 fun expr(op: IfOperation): ExpressionNode = when (op) {
     IfOperation.NO_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, VARIABLE_NODE_Y)
     IfOperation.SINGLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, VARIABLE_NODE_Z))
-    IfOperation.DOUBLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, IfNode(TrueNode, VARIABLE_NODE_Z, VARIABLE_NODE_W)))
-    IfOperation.TRIPLE_ELIF -> IfNode(TrueNode, VARIABLE_NODE_X, IfNode(FalseNode, VARIABLE_NODE_Y, IfNode(TrueNode, VARIABLE_NODE_Z, IfNode(FalseNode, VARIABLE_NODE_W, VARIABLE_NODE_V))))
+    IfOperation.DOUBLE_ELIF -> IfNode(
+        TrueNode,
+        VARIABLE_NODE_X,
+        IfNode(FalseNode, VARIABLE_NODE_Y, IfNode(TrueNode, VARIABLE_NODE_Z, VARIABLE_NODE_W))
+    )
+    IfOperation.TRIPLE_ELIF -> IfNode(
+        TrueNode,
+        VARIABLE_NODE_X,
+        IfNode(
+            FalseNode,
+            VARIABLE_NODE_Y,
+            IfNode(TrueNode, VARIABLE_NODE_Z, IfNode(FalseNode, VARIABLE_NODE_W, VARIABLE_NODE_V))
+        )
+    )
 }
 
 fun expr(op: ApplicationOperation): ExpressionNode = when (op) {
-    ApplicationOperation.NO_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, emptyList())
-    ApplicationOperation.SINGLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X))
-    ApplicationOperation.DOUBLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y))
-    ApplicationOperation.TRIPLE_PARAM_APPLICATION -> ApplicationNode(SECONDARY_FUNCTION_NAME, listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y, VARIABLE_NODE_Z))
+    ApplicationOperation.NO_PARAM_APPLICATION ->
+        ApplicationNode(VariableNode(SECONDARY_FUNCTION_NAME), emptyList())
+    ApplicationOperation.SINGLE_PARAM_APPLICATION ->
+        ApplicationNode(VariableNode(SECONDARY_FUNCTION_NAME), listOf(VARIABLE_NODE_X))
+    ApplicationOperation.DOUBLE_PARAM_APPLICATION ->
+        ApplicationNode(VariableNode(SECONDARY_FUNCTION_NAME), listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y))
+    ApplicationOperation.TRIPLE_PARAM_APPLICATION ->
+        ApplicationNode(
+            VariableNode(SECONDARY_FUNCTION_NAME),
+            listOf(VARIABLE_NODE_X, VARIABLE_NODE_Y, VARIABLE_NODE_Z)
+        )
 }
 
 fun expr(op: LambdaOperation): ExpressionNode = when (op) {
     LambdaOperation.NO_PARAM_LAMBDA -> LambdaNode(emptyList(), NullNode)
     LambdaOperation.SINGLE_PARAM_LAMBDA -> LambdaNode(listOf(VARIABLE_NODE_X.id), NullNode)
     LambdaOperation.DOUBLE_PARAM_LAMBDA -> LambdaNode(listOf(VARIABLE_NODE_X.id, VARIABLE_NODE_Y.id), NullNode)
-    LambdaOperation.TRIPLE_PARAM_LAMBDA -> LambdaNode(listOf(VARIABLE_NODE_X.id, VARIABLE_NODE_Y.id, VARIABLE_NODE_Z.id), NullNode)
+    LambdaOperation.TRIPLE_PARAM_LAMBDA -> LambdaNode(
+        listOf(
+            VARIABLE_NODE_X.id,
+            VARIABLE_NODE_Y.id,
+            VARIABLE_NODE_Z.id
+        ), NullNode
+    )
 }

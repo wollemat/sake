@@ -33,7 +33,9 @@ class SakeParserExpressionTests {
 
     @Test
     fun `application expression parsing test`() =
-        ApplicationOperation.values().forEach { assertEquals(ast(expr(it)), SakeStringParser(src(it.src)).parse()) }
+        ApplicationOperation.values().forEach {
+            println(src(it.src))
+            assertEquals(ast(expr(it)), SakeStringParser(src(it.src)).parse()) }
 
     @Test
     fun `lambda expression parsing test`() =

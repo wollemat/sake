@@ -2,7 +2,7 @@ package me.wollemat.sake.desugarer
 
 data class DesugaredAbstractSyntaxTree(val funcs: List<FunctionCore>)
 
-data class FunctionCore(val id: String, val params: List<String>, val expr: ExpressionCore)
+data class FunctionCore(val id: String, val param: String, val expr: ExpressionCore)
 
 sealed class ExpressionCore
 
@@ -21,6 +21,7 @@ data class ApplicationCore(val id: String, val args: List<ExpressionCore>) : Exp
 data class StringCore(val str: String) : ExpressionCore()
 data class FloatCore(val num: Double) : ExpressionCore()
 data class IntegerCore(val num: Int) : ExpressionCore()
+data class Lambda(val param: String, val expr: ExpressionCore) : ExpressionCore()
 
 object TrueCore : ExpressionCore() {
     override fun toString(): String = "TrueCore"

@@ -25,7 +25,7 @@ data class NeqNode(val left: ExpressionNode, val right: ExpressionNode) : Expres
 data class ArrayNode(val id: String, val index: ExpressionNode) : ExpressionNode()
 data class AppendNode(val head: ExpressionNode, val tail: ExpressionNode) : ExpressionNode()
 data class VariableNode(val id: String) : ExpressionNode()
-data class ApplicationNode(val id: String, val args: List<ExpressionNode>) : ExpressionNode()
+data class ApplicationNode(val func: ExpressionNode, val args: List<ExpressionNode>) : ExpressionNode()
 data class PrintNode(val msg: ExpressionNode) : ExpressionNode()
 data class FailNode(val msg: ExpressionNode) : ExpressionNode()
 data class StringNode(val str: String) : ExpressionNode()
