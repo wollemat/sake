@@ -12,7 +12,6 @@ import me.wollemat.sake.parser.ExpressionNode
 import me.wollemat.sake.parser.FailNode
 import me.wollemat.sake.parser.FalseNode
 import me.wollemat.sake.parser.FloatNode
-import me.wollemat.sake.parser.FunctionNode
 import me.wollemat.sake.parser.GeNode
 import me.wollemat.sake.parser.GtNode
 import me.wollemat.sake.parser.IfNode
@@ -35,9 +34,7 @@ import me.wollemat.sake.parser.TrueNode
 import me.wollemat.sake.parser.VariableNode
 
 class SakeDesugarer(val ast: AbstractSyntaxTree) {
-    fun desugar(): DesugaredAbstractSyntaxTree = DesugaredAbstractSyntaxTree(ast.funcs.map { curry(it) })
-
-    private fun curry(func: FunctionNode): FunctionCore = TODO()
+    fun desugar(): DesugaredAbstractSyntaxTree = DesugaredAbstractSyntaxTree(ast.funcs.map { FunctionCore(it.id, it.params, desugar(it.expr)) })
 
     private fun desugar(expr: ExpressionNode): ExpressionCore = when (expr) {
         is IfNode -> IfCore(desugar(expr.cond), desugar(expr.left), desugar(expr.right))
@@ -65,10 +62,10 @@ class SakeDesugarer(val ast: AbstractSyntaxTree) {
         is ArrayNode -> ArrayCore(expr.id, desugar(expr.index))
         is AppendNode -> AppendCore(desugar(expr.head), desugar(expr.tail))
         is VariableNode -> VariableCore(expr.id)
-        is ApplicationNode -> TODO()
-        is LambdaNode -> TODO()
-        is PrintNode -> ApplicationCore("print", listOf(desugar(expr.msg)))
-        is FailNode -> ApplicationCore("fail", listOf(desugar(expr.msg)))
+        is ApplicationNode -> ApplicationCore(desugar(expr.func), expr.args.map { desugar(it) })
+        is LambdaNode -> LambdaCore(expr.params, desugar(expr.expr))
+        is PrintNode -> PrintCore(desugar(expr.msg))
+        is FailNode -> FailCore(desugar(expr.msg))
         is StringNode -> StringCore(expr.str)
         is FloatNode -> FloatCore(expr.num)
         is IntegerNode -> IntegerCore(expr.num)

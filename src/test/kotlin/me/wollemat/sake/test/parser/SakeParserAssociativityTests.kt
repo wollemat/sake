@@ -1,6 +1,7 @@
 package me.wollemat.sake.test.parser
 
 import me.wollemat.sake.parser.SakeStringParser
+import me.wollemat.sake.test.common.src
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
