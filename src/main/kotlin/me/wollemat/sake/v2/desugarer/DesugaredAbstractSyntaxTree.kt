@@ -1,4 +1,4 @@
-package me.wollemat.sake.desugarer
+package me.wollemat.sake.v2.desugarer
 
 data class DesugaredAbstractSyntaxTree(val funcs: List<FunctionCore>)
 
@@ -14,7 +14,8 @@ data class RemCore(val left: ExpressionCore, val right: ExpressionCore) : Expres
 data class NandCore(val left: ExpressionCore, val right: ExpressionCore) : ExpressionCore()
 data class LtCore(val left: ExpressionCore, val right: ExpressionCore) : ExpressionCore()
 data class EqCore(val left: ExpressionCore, val right: ExpressionCore) : ExpressionCore()
-data class ArrayCore(val id: String, val index: ExpressionCore) : ExpressionCore()
+data class ArrayCore(val list: ExpressionCore, val index: ExpressionCore) : ExpressionCore()
+data class ConcatCore(val left: ExpressionCore, val right: ExpressionCore) : ExpressionCore()
 data class AppendCore(val left: ExpressionCore, val right: ExpressionCore) : ExpressionCore()
 data class VariableCore(val id: String) : ExpressionCore()
 data class ApplicationCore(val func: ExpressionCore, val args: List<ExpressionCore>) : ExpressionCore()

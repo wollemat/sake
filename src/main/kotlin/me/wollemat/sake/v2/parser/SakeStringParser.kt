@@ -1,4 +1,4 @@
-package me.wollemat.sake.parser
+package me.wollemat.sake.v2.parser
 
 import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream

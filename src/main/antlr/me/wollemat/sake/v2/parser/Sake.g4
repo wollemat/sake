@@ -1,6 +1,6 @@
 grammar Sake;
 
-@header { package me.wollemat.sake.parser; }
+@header { package me.wollemat.sake.v2.parser; }
 
 start       :   function+ EOF
             ;
@@ -12,7 +12,7 @@ function    :   FUN ID OPEN CLOSE ARROW expr                                    
 // ORDER is important for precedence!
 
 expr        :   OPEN expr CLOSE                                                 # GroupingExpression
-            |   ID SQUAREOPEN expr SQUARECLOSE                                  # ArrayExpression
+            |   expr SQUAREOPEN expr SQUARECLOSE                                # ArrayExpression
             |   SUB expr                                                        # NegationExpression
             |   NOT expr                                                        # NotExpression
             |   expr MULT expr                                                  # MultiplicationExpression
@@ -29,8 +29,9 @@ expr        :   OPEN expr CLOSE                                                 
             |   expr AND expr                                                   # AndExpression
             |   expr OR expr                                                    # OrExpression
             |   expr APPEND expr                                                # AppendExpression
+            |   expr CONCAT expr                                                # ConcatExpression
             |   expr OPEN CLOSE                                                 # NoArgumentApplicationExpression
-            |   expr OPEN expr (COMMA expr)* CLOSE                              # ArgumentApplciationExpression
+            |   expr OPEN expr (COMMA expr)* CLOSE                              # ArgumentApplicationExpression
             |   LAMBDA OPEN CLOSE ARROW expr                                    # NoParamLambdaExpression
             |   LAMBDA OPEN ID (COMMA ID)* CLOSE ARROW expr                     # ParamLambdaExpression
             |   PRINT OPEN expr CLOSE                                           # PrintExpression
@@ -87,6 +88,7 @@ SQUARECLOSE :   ']';
 //  Reserved operators
 
 APPEND      :   '::';
+CONCAT      :   ':::';
 
 PLUS        :   '+';
 SUB         :   '-';
