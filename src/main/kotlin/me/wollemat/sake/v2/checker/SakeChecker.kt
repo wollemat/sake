@@ -1,6 +1,5 @@
-package me.wollemat.sake.v2.interpreter
+package me.wollemat.sake.v2.checker
 
-import kotlin.math.abs
 import me.wollemat.sake.v2.desugarer.AddCore
 import me.wollemat.sake.v2.desugarer.AppendCore
 import me.wollemat.sake.v2.desugarer.ApplicationCore
@@ -13,6 +12,7 @@ import me.wollemat.sake.v2.desugarer.ExpressionCore
 import me.wollemat.sake.v2.desugarer.FailCore
 import me.wollemat.sake.v2.desugarer.FalseCore
 import me.wollemat.sake.v2.desugarer.FloatCore
+import me.wollemat.sake.v2.desugarer.FunctionCore
 import me.wollemat.sake.v2.desugarer.IfCore
 import me.wollemat.sake.v2.desugarer.IntegerCore
 import me.wollemat.sake.v2.desugarer.LambdaCore
@@ -26,26 +26,22 @@ import me.wollemat.sake.v2.desugarer.RemCore
 import me.wollemat.sake.v2.desugarer.StringCore
 import me.wollemat.sake.v2.desugarer.TrueCore
 import me.wollemat.sake.v2.desugarer.VariableCore
+import me.wollemat.sake.v2.interpreter.BoolType
 
-object DivisionByZeroException : Exception()
+class SakeChecker(val dast: DesugaredAbstractSyntaxTree) {
+    fun check(): Boolean = dast.funcs.all { check(it) }
 
-class SakeInterpreter(val dast: DesugaredAbstractSyntaxTree) {
-    fun interp(): Value = interp(dast.funcs.find { it.id == "main" }!!.expr)
+    private fun check(func: FunctionCore): Boolean = check(func.expr, func.params.map { it to BoolType })
 
-    private fun interp(expr: ExpressionCore): Value = when (expr) {
+    private fun check(expr: ExpressionCore, scope: TypeScope): Boolean = when (expr) {
         is IfCore -> TODO()
-        is AddCore -> NumValue((interp(expr.left) as NumValue).num + (interp(expr.right) as NumValue).num)
-        is MultCore -> NumValue((interp(expr.left) as NumValue).num * (interp(expr.right) as NumValue).num)
-        is DivCore -> {
-            val dividend = (interp(expr.left) as NumValue).num
-            val divisor = (interp(expr.right) as NumValue).num
-            if (abs(divisor) < 0.001) throw DivisionByZeroException
-            NumValue(dividend / divisor)
-        }
-        is RemCore -> NumValue((interp(expr.left) as NumValue).num % (interp(expr.right) as NumValue).num)
-        is NandCore -> BoolValue(!((interp(expr.left) as BoolValue).bool && (interp(expr.right) as BoolValue).bool))
-        is LtCore -> BoolValue((interp(expr.left) as NumValue).num < (interp(expr.right) as NumValue).num)
-        is EqCore -> BoolValue((interp(expr.left) as NumValue).num == (interp(expr.right) as NumValue).num) // TODO fix floating point accuracy error
+        is AddCore -> TODO()
+        is MultCore -> TODO()
+        is DivCore -> TODO()
+        is RemCore -> TODO()
+        is NandCore -> TODO()
+        is LtCore -> TODO()
+        is EqCore -> TODO()
         is ArrayCore -> TODO()
         is ConcatCore -> TODO()
         is AppendCore -> TODO()
@@ -53,12 +49,12 @@ class SakeInterpreter(val dast: DesugaredAbstractSyntaxTree) {
         is ApplicationCore -> TODO()
         is PrintCore -> TODO()
         is FailCore -> TODO()
-        is StringCore -> StringValue(expr.str)
-        is FloatCore -> NumValue(expr.num)
-        is IntegerCore -> NumValue(expr.num.toDouble())
+        is StringCore -> TODO()
+        is FloatCore -> TODO()
+        is IntegerCore -> TODO()
         is LambdaCore -> TODO()
-        TrueCore -> BoolValue(true)
-        FalseCore -> BoolValue(false)
+        TrueCore -> TODO()
+        FalseCore -> TODO()
         NilCore -> TODO()
         NullCore -> TODO()
     }
